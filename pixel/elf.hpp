@@ -16,3 +16,13 @@ typedef struct {
     Elf64_Half    e_shnum;
     Elf64_Half    e_shstrndx;
 } Elf64_Ehdr;
+
+typedef struct {
+    Elf64_Word  p_type;
+    Elf64_Word  p_flags;
+    Elf64_Off   p_offset;
+    Elf64_Addr  p_vaddr;
+    Elf64_Addr  p_paddr;
+    Elf64_Xword p_filesz;
+    Elf64_Xword p_align;
+} Elf64_Phdr;
