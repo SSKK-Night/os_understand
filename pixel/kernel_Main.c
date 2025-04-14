@@ -24,3 +24,23 @@ if (EFI_ERROR(status)) {
     Print(L"failed to allocate pages: %r\n", status);
     Halt();
 }
+
+void CalcLoadAddressRange(Elf64_Ehdr* ehdr, UINT64* first, UINT64* last) {
+    Elf64_Phdr* phdr = (Elf64_Phdr*)((UINT64)ehdr + ehdr->e_phoff);
+    *first = MAX_UINT64;
+    *last = 0;
+    for (Elf64_Half i = 0; i < ehdr->e_phnum; ++i) {
+        if (phdr[i].p_type != PT_LOAD) continue;
+        *first = MIN(*first, phdr[i].p_vaddr);
+        *last = MAX(*last, phdr[i].p_vaddr + phdr[i].p_memsz);
+    }
+}
+
+CopyLoadSegments(kernel_ehdr);
+Print(L"kernel: 0x%0lx - 0x%0lx\n", kernel_first_addr, kernel_last_addr);
+
+status = gBS->FreePool(kernel_buffer);
+if (EFI_ERROR(status)) {
+    Print(L"failed to free pool: %r\n", status);
+    Halt();
+}
