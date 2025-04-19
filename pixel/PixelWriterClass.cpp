@@ -65,3 +65,11 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config) {
     }
     while (1) __asm__("hlt");
 }
+
+void* operator new(size_t, void* buf) {
+    return buf;
+}
+
+void operator delete(void* obj) noexcept {
+    
+}
