@@ -38,3 +38,8 @@ for (char c = '!'; c <= '~'; ++c, ++i) {
     WriteAscii(*pixel_writer, 8 * i, 50, c, {0, 0, 0});
 }
 WriteString(*pixel_writer, 0, 66, "Hello, world!", {0, 0, 255});
+
+char buf[128];
+sprintf(buf, "1 + 2 = %d", 1 + 2);
+WriteString(*pixel_writer, 0, 82, buf, {0, 0, 0});
+
