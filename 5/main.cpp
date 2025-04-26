@@ -43,3 +43,20 @@ char buf[128];
 sprintf(buf, "1 + 2 = %d", 1 + 2);
 WriteString(*pixel_writer, 0, 82, buf, {0, 0, 0});
 
+
+int printk(const char* format, ...) {
+    va_list ap;
+    int result;
+    char s[1024];
+
+    va_start(ap, format);
+    result = vsprintf(s, format, ap);
+    va_end(ap);
+
+    cosole->PutString(s);
+    return result;
+}
+
+for (int i = 0; i < 27; ++i) {
+    printk("printk: %d\n", i);
+}
